@@ -55,7 +55,7 @@ namespace Scellecs.Morpeh.Providers {
 
         protected void CheckEntityInitialization() {
             if (this.cachedEntity.IsNullOrDisposed()) {
-                var instanceId = this.gameObject.GetInstanceID();
+                var instanceId = this.gameObject.GetEntityId().GetHashCode();
                 if (map.TryGetValue(instanceId, out var item)) {
                     if (item.entity.IsNullOrDisposed()) {
                         this.cachedEntity = item.entity = World.Default.CreateEntity();
@@ -98,7 +98,7 @@ namespace Scellecs.Morpeh.Providers {
             this.PreDeinitialize();
             this.Deinitialize();
             
-            var instanceId = this.gameObject.GetInstanceID();
+            var instanceId = this.gameObject.GetEntityId().GetHashCode();
             if (map.TryGetValue(instanceId, out var item)) {
                 item.refCounter--;
                 if (item.refCounter <= 0) {
