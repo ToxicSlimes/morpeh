@@ -60,6 +60,10 @@ namespace Scellecs.Morpeh.Utils.Editor {
                 var defineAsset = AssetDatabase.LoadAssetAtPath<DefineAsset>(AssetDatabase.GUIDToAssetPath(guid));
                 if (defineAsset != null) {
                     foreach (var define in defineAsset.defines) {
+                        if (define.define == "MORPEH" && savedDefines.Split(';').Any(s => s.Trim() == "STATIC_ECS")) {
+                            existsDefines.Add(define.define);
+                            continue;
+                        }
                         if (!savedDefines.Contains($";{define};") && !savedDefines.StartsWith($"{define};")) {
                             savedDefines += $"{define};";
                             addedDefines.Add(define.define);
